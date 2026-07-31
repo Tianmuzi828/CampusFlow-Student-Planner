@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<VBox spacing="20.0" styleClass="assignments-page"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.campusflow.app.AssignmentsController">
+    <padding>
+        <Insets bottom="26.0" left="28.0" right="28.0" top="26.0"/>
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="12.0">
+        <VBox spacing="4.0">
+            <Label styleClass="date-label" text="%assignments.eyebrow"/>
+            <Label styleClass="page-title" text="%assignments.title"/>
+            <Label fx:id="unfinishedCountLabel" styleClass="page-subtitle"
+                   text="%assignments.count.zero"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#onAddAssignment"
+                styleClass="primary-button" text="%assignments.add"/>
+    </HBox>
+
+    <HBox spacing="16.0" VBox.vgrow="ALWAYS">
+        <VBox spacing="12.0" styleClass="assignment-calendar-panel"
+              HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                <Label fx:id="monthLabel" styleClass="calendar-range-label"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button mnemonicParsing="false" onAction="#onPreviousMonth"
+                        styleClass="assignment-month-arrow" text="‹"/>
+                <Button mnemonicParsing="false" onAction="#onThisMonth"
+                        styleClass="assignment-month-today" text="%common.today"/>
+                <Button mnemonicParsing="false" onAction="#onNextMonth"
+                        styleClass="assignment-month-arrow" text="›"/>
+            </HBox>
+            <GridPane fx:id="monthGrid" minHeight="520.0"
+                      styleClass="assignment-month-grid" VBox.vgrow="ALWAYS"/>
+        </VBox>
+
+        <VBox minWidth="340.0" prefWidth="370.0" spacing="14.0"
+              styleClass="assignment-detail-panel">
+            <VBox spacing="4.0">
+                <Label fx:id="selectedDateLabel" styleClass="panel-title"/>
+                <Label fx:id="selectedDateCountLabel" styleClass="panel-subtitle"/>
+            </VBox>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                        styleClass="assignment-detail-scroll" VBox.vgrow="ALWAYS">
+                <content>
+                    <VBox fx:id="selectedAssignmentsContainer" spacing="10.0"/>
+                </content>
+            </ScrollPane>
+        </VBox>
+    </HBox>
+</VBox>

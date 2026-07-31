@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<VBox spacing="22.0" styleClass="courses-page"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.campusflow.app.CoursesController">
+    <padding>
+        <Insets bottom="30.0" left="36.0" right="36.0" top="30.0"/>
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="12.0">
+        <VBox spacing="4.0">
+            <Label styleClass="date-label" text="%courses.eyebrow"/>
+            <Label styleClass="page-title" text="%courses.title"/>
+            <Label fx:id="courseCountLabel" styleClass="page-subtitle"
+                   text="%courses.count.zero"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#onAddCourse"
+                styleClass="primary-button" text="%courses.add"/>
+    </HBox>
+
+    <VBox spacing="4.0">
+        <Label styleClass="panel-title" text="%courses.panel.title"/>
+        <Label styleClass="panel-subtitle"
+               text="%courses.panel.copy"/>
+    </VBox>
+
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                styleClass="course-list-scroll" VBox.vgrow="ALWAYS">
+        <content>
+            <VBox fx:id="courseListContainer" spacing="12.0"
+                  styleClass="course-management-list"/>
+        </content>
+    </ScrollPane>
+</VBox>

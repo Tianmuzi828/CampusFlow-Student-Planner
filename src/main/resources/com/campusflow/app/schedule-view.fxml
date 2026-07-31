@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<VBox spacing="20.0" styleClass="schedule-page"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.campusflow.app.ScheduleController">
+    <padding>
+        <Insets bottom="26.0" left="28.0" right="28.0" top="26.0"/>
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="10.0">
+        <VBox spacing="4.0">
+            <Label styleClass="date-label" text="%schedule.eyebrow"/>
+            <Label styleClass="page-title" text="%schedule.title"/>
+            <Label fx:id="courseCountLabel" styleClass="page-subtitle"
+                   text="%schedule.count.zero"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" onAction="#onPreviousWeek"
+                styleClass="calendar-arrow-button" text="‹"/>
+        <Button mnemonicParsing="false" onAction="#onThisWeek"
+                styleClass="calendar-today-button" text="%common.today"/>
+        <Button mnemonicParsing="false" onAction="#onNextWeek"
+                styleClass="calendar-arrow-button" text="›"/>
+    </HBox>
+
+    <HBox alignment="CENTER_LEFT">
+        <Label fx:id="weekRangeLabel" styleClass="calendar-range-label"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="precisionHintLabel" styleClass="calendar-hint-label"
+               text="%schedule.precision.initial"/>
+    </HBox>
+
+    <VBox styleClass="calendar-shell" VBox.vgrow="ALWAYS">
+        <GridPane fx:id="dayHeaderGrid" minWidth="780.0" prefHeight="64.0"
+                  styleClass="calendar-day-header-row"/>
+        <ScrollPane fx:id="calendarScrollPane" fitToWidth="true"
+                    hbarPolicy="NEVER" pannable="true"
+                    styleClass="calendar-scroll" VBox.vgrow="ALWAYS">
+            <content>
+                <GridPane fx:id="calendarGrid" minWidth="780.0"
+                          styleClass="calendar-grid"/>
+            </content>
+        </ScrollPane>
+    </VBox>
+</VBox>

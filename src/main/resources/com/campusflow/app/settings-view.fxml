@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="settings-scroll"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.campusflow.app.SettingsController">
+    <content>
+        <VBox spacing="20.0" styleClass="settings-page">
+            <padding>
+                <Insets bottom="34.0" left="32.0" right="32.0" top="28.0"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="12.0">
+                <VBox spacing="4.0">
+                    <Label styleClass="date-label" text="%settings.eyebrow"/>
+                    <Label styleClass="page-title" text="%settings.title"/>
+                    <Label styleClass="page-subtitle"
+                           text="%settings.subtitle"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="saveStatusLabel" styleClass="settings-status-success"
+                       text="%settings.saved"/>
+                <Button mnemonicParsing="false" onAction="#onSaveSettings"
+                        styleClass="primary-button" text="%settings.save"/>
+            </HBox>
+
+            <GridPane hgap="16.0" vgap="16.0">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50.0"/>
+                    <ColumnConstraints percentWidth="50.0"/>
+                </columnConstraints>
+
+                <VBox spacing="12.0" styleClass="settings-card" GridPane.columnIndex="0">
+                    <Label styleClass="settings-card-title" text="%settings.profile.title"/>
+                    <Label styleClass="settings-card-copy"
+                           text="%settings.profile.copy" wrapText="true"/>
+                    <Label styleClass="form-label" text="%settings.displayName"/>
+                    <TextField fx:id="displayNameField" maxWidth="Infinity"
+                               promptText="%settings.displayName.prompt" styleClass="input-control"/>
+                    <Label styleClass="form-label" text="%settings.semesterName"/>
+                    <TextField fx:id="semesterNameField" maxWidth="Infinity"
+                               promptText="%settings.semesterName.prompt" styleClass="input-control"/>
+                    <HBox spacing="10.0">
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.starts"/>
+                            <DatePicker fx:id="semesterStartPicker" maxWidth="Infinity"
+                                        styleClass="input-control"/>
+                        </VBox>
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.ends"/>
+                            <DatePicker fx:id="semesterEndPicker" maxWidth="Infinity"
+                                        styleClass="input-control"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <VBox spacing="12.0" styleClass="settings-card" GridPane.columnIndex="1">
+                    <Label styleClass="settings-card-title" text="%settings.calendar.title"/>
+                    <Label styleClass="settings-card-copy"
+                           text="%settings.calendar.copy" wrapText="true"/>
+                    <HBox spacing="10.0">
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.weekStartsOn"/>
+                            <ComboBox fx:id="weekStartBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.timeFormat"/>
+                            <ComboBox fx:id="timeFormatBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="10.0">
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.visibleFrom"/>
+                            <ComboBox fx:id="calendarStartBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.visibleUntil"/>
+                            <ComboBox fx:id="calendarEndBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                    </HBox>
+                    <Label styleClass="form-label" text="%settings.timePrecision"/>
+                    <ComboBox fx:id="timeIntervalBox" maxWidth="Infinity"
+                              styleClass="input-control"/>
+                </VBox>
+
+                <VBox spacing="12.0" styleClass="settings-card"
+                      GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label styleClass="settings-card-title" text="%settings.assignmentDefaults.title"/>
+                    <Label styleClass="settings-card-copy"
+                           text="%settings.assignmentDefaults.copy" wrapText="true"/>
+                    <HBox spacing="10.0">
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.defaultDeadline"/>
+                            <ComboBox fx:id="defaultDeadlineBox" maxWidth="Infinity"
+                                      styleClass="input-control" visibleRowCount="10"/>
+                        </VBox>
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.defaultPriority"/>
+                            <ComboBox fx:id="defaultPriorityBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                    </HBox>
+                    <CheckBox fx:id="showCompletedCheckBox"
+                              styleClass="settings-check"
+                              text="%settings.showCompleted"/>
+                </VBox>
+
+                <VBox spacing="12.0" styleClass="settings-card"
+                      GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label styleClass="settings-card-title" text="%settings.appearance.title"/>
+                    <Label styleClass="settings-card-copy"
+                           text="%settings.appearance.copy" wrapText="true"/>
+                    <HBox spacing="10.0">
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.language"/>
+                            <ComboBox fx:id="languageBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.theme"/>
+                            <ComboBox fx:id="themeBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="10.0">
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.accentColor"/>
+                            <ComboBox fx:id="accentColorBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                            <Label styleClass="form-label" text="%settings.displayDensity"/>
+                            <ComboBox fx:id="densityBox" maxWidth="Infinity"
+                                      styleClass="input-control"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <VBox spacing="12.0" styleClass="settings-card"
+                      GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label styleClass="settings-card-title" text="%settings.reminders.title"/>
+                    <Label styleClass="settings-card-copy"
+                           text="%settings.reminders.copy" wrapText="true"/>
+                    <CheckBox fx:id="oneDayReminderCheckBox" styleClass="settings-check"
+                              text="%settings.remindDay"/>
+                    <CheckBox fx:id="oneHourReminderCheckBox" styleClass="settings-check"
+                              text="%settings.remindHour"/>
+                    <CheckBox fx:id="overdueReminderCheckBox" styleClass="settings-check"
+                              text="%settings.remindOverdue"/>
+                </VBox>
+
+                <VBox spacing="12.0" styleClass="settings-card"
+                      GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Label styleClass="settings-card-title" text="%settings.data.title"/>
+                    <Label styleClass="settings-card-copy"
+                           text="%settings.data.copy" wrapText="true"/>
+                    <Label styleClass="form-label" text="%settings.databaseLocation"/>
+                    <Label fx:id="databasePathLabel" maxWidth="Infinity"
+                           styleClass="settings-path" text="data/campusflow.db" wrapText="true"/>
+                    <HBox spacing="8.0">
+                        <Button mnemonicParsing="false" onAction="#onCopyDatabasePath"
+                                styleClass="settings-action-button" text="%settings.copyPath"/>
+                        <Button mnemonicParsing="false" onAction="#onExportData"
+                                styleClass="settings-action-button" text="%settings.exportCsv"/>
+                    </HBox>
+                    <HBox spacing="8.0">
+                        <Button mnemonicParsing="false" onAction="#onBackupDatabase"
+                                styleClass="settings-action-button" text="%settings.createBackup"/>
+                        <Button mnemonicParsing="false" onAction="#onRestoreDatabase"
+                                styleClass="settings-action-button" text="%settings.restoreBackup"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" onAction="#onClearData"
+                                styleClass="settings-danger-button" text="%settings.clearData"/>
+                    </HBox>
+                </VBox>
+            </GridPane>
+        </VBox>
+    </content>
+</ScrollPane>

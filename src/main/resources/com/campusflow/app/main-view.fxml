@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane fx:id="rootPane" prefHeight="760.0" prefWidth="1180.0"
+            stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.campusflow.app.MainController">
+    <left>
+        <VBox prefWidth="226.0" styleClass="sidebar">
+            <padding>
+                <Insets bottom="24.0" left="20.0" right="20.0" top="26.0"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="brand-row">
+                <ImageView accessibleText="CampusFlow logo" fitHeight="48.0"
+                           fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/campusflow-logo-a1.png"/>
+                    </image>
+                </ImageView>
+                <VBox spacing="1.0">
+                    <Label styleClass="brand-name" text="CampusFlow"/>
+                    <Label styleClass="brand-subtitle" text="%brand.subtitle"/>
+                </VBox>
+            </HBox>
+
+            <Label styleClass="nav-section-label" text="%nav.section.workspace">
+                <VBox.margin>
+                    <Insets top="34.0"/>
+                </VBox.margin>
+            </Label>
+            <Button fx:id="overviewNavButton" maxWidth="Infinity"
+                    mnemonicParsing="false" onAction="#onShowOverview"
+                    styleClass="nav-button, nav-button-active" text="%nav.overview"/>
+            <Button fx:id="scheduleNavButton" maxWidth="Infinity"
+                    mnemonicParsing="false" onAction="#onShowSchedule"
+                    styleClass="nav-button" text="%nav.schedule"/>
+            <Button fx:id="assignmentsNavButton" maxWidth="Infinity"
+                    mnemonicParsing="false" onAction="#onShowAssignments"
+                    styleClass="nav-button" text="%nav.assignments"/>
+            <Button fx:id="coursesNavButton" maxWidth="Infinity"
+                    mnemonicParsing="false" onAction="#onShowCourses"
+                    styleClass="nav-button" text="%nav.courses"/>
+
+            <Label styleClass="nav-section-label" text="%nav.section.preferences">
+                <VBox.margin>
+                    <Insets top="24.0"/>
+                </VBox.margin>
+            </Label>
+            <Button fx:id="settingsNavButton" maxWidth="Infinity"
+                    mnemonicParsing="false" onAction="#onShowSettings"
+                    styleClass="nav-button" text="%nav.settings"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <VBox spacing="8.0" styleClass="focus-card">
+                <Label styleClass="focus-eyebrow" text="%progress.eyebrow"/>
+                <Label styleClass="focus-title" text="%progress.title"/>
+                <Label styleClass="focus-copy"
+                       text="%progress.copy"
+                       wrapText="true"/>
+                <ProgressBar fx:id="weeklyFocusProgressBar" prefWidth="166.0"
+                             progress="0.0" styleClass="focus-progress"/>
+                <Label fx:id="weeklyFocusProgressLabel"
+                       styleClass="focus-progress-label" text="%progress.zero"/>
+            </VBox>
+
+            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="profile-row">
+                <Label fx:id="profileAvatarLabel" alignment="CENTER"
+                       prefHeight="36.0" prefWidth="36.0"
+                       styleClass="avatar" text="S"/>
+                <VBox spacing="1.0">
+                    <Label fx:id="profileNameLabel" styleClass="profile-name"
+                           text="%profile.defaultName"/>
+                    <Label fx:id="profileSemesterLabel" styleClass="profile-subtitle"
+                           text="%profile.defaultSemester"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fx:id="overviewView" fitToWidth="true" hbarPolicy="NEVER"
+                    styleClass="content-scroll">
+            <content>
+                <VBox spacing="24.0" styleClass="content">
+                    <padding>
+                        <Insets bottom="34.0" left="36.0" right="36.0" top="30.0"/>
+                    </padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <VBox spacing="4.0">
+                            <Label fx:id="currentDateLabel" styleClass="date-label"/>
+                            <Label fx:id="greetingLabel" styleClass="page-title"/>
+                            <Label styleClass="page-subtitle"
+                                   text="%overview.subtitle"/>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" onAction="#onAddCourse"
+                                styleClass="secondary-button" text="%overview.addCourse"/>
+                        <Button mnemonicParsing="false" onAction="#onQuickAddAssignment"
+                                styleClass="primary-button" text="%overview.addAssignment"/>
+                    </HBox>
+
+                    <GridPane hgap="16.0" vgap="16.0">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25.0"/>
+                            <ColumnConstraints percentWidth="25.0"/>
+                            <ColumnConstraints percentWidth="25.0"/>
+                            <ColumnConstraints percentWidth="25.0"/>
+                        </columnConstraints>
+
+                        <VBox spacing="10.0" styleClass="stat-card" GridPane.columnIndex="0">
+                            <Label styleClass="stat-label" text="%overview.stat.todayClasses"/>
+                            <Label fx:id="todayClassesValueLabel" styleClass="stat-value" text="0"/>
+                            <Label fx:id="todayClassesNoteLabel"
+                                   styleClass="stat-note, note-blue" text="%overview.stat.noClasses"/>
+                        </VBox>
+                        <VBox spacing="10.0" styleClass="stat-card" GridPane.columnIndex="1">
+                            <Label styleClass="stat-label" text="%overview.stat.dueNextSevenDays"/>
+                            <Label fx:id="dueThisWeekValueLabel" styleClass="stat-value" text="0"/>
+                            <Label fx:id="dueThisWeekNoteLabel"
+                                   styleClass="stat-note, note-amber" text="%overview.stat.noHighPriority"/>
+                        </VBox>
+                        <VBox spacing="10.0" styleClass="stat-card" GridPane.columnIndex="2">
+                            <Label styleClass="stat-label" text="%overview.stat.overdue"/>
+                            <Label fx:id="overdueValueLabel" styleClass="stat-value" text="0"/>
+                            <Label fx:id="overdueNoteLabel"
+                                   styleClass="stat-note, note-red" text="%overview.stat.caughtUp"/>
+                        </VBox>
+                        <VBox spacing="10.0" styleClass="stat-card" GridPane.columnIndex="3">
+                            <Label styleClass="stat-label" text="%overview.stat.completion"/>
+                            <Label fx:id="completionValueLabel" styleClass="stat-value" text="0%"/>
+                            <ProgressBar fx:id="completionProgressBar" prefWidth="150.0"
+                                         progress="0.0" styleClass="stat-progress"/>
+                        </VBox>
+                    </GridPane>
+
+                    <GridPane hgap="18.0" vgap="18.0">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="55.0"/>
+                            <ColumnConstraints percentWidth="45.0"/>
+                        </columnConstraints>
+
+                        <VBox spacing="18.0" styleClass="panel" GridPane.columnIndex="0">
+                            <VBox spacing="3.0">
+                                <Label styleClass="panel-title" text="%overview.todaySchedule"/>
+                                <Label fx:id="todayScheduleSubtitleLabel"
+                                       styleClass="panel-subtitle" text="%overview.classes.zero"/>
+                            </VBox>
+                            <VBox fx:id="todayScheduleContainer" spacing="18.0"/>
+                        </VBox>
+
+                        <VBox spacing="16.0" styleClass="panel" GridPane.columnIndex="1">
+                            <VBox spacing="3.0">
+                                <Label styleClass="panel-title" text="%overview.upcomingAssignments"/>
+                                <Label fx:id="upcomingAssignmentsSubtitleLabel"
+                                       styleClass="panel-subtitle" text="%overview.nothingWaiting"/>
+                            </VBox>
+                            <VBox fx:id="upcomingAssignmentsContainer" spacing="5.0"/>
+                        </VBox>
+                    </GridPane>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
