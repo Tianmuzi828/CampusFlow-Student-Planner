@@ -89,7 +89,11 @@ public class CoursesController {
         Label schedule = new Label(
                 formatMeetingDays(course.getMeetingDays()) + " · "
                         + settings.formatTime(course.getStartTime()) + " – "
-                        + settings.formatTime(course.getEndTime())
+                        + settings.formatTime(course.getEndTime()) + " · "
+                        + I18n.text(
+                                "courses.starts",
+                                I18n.date(course.getStartDate(), "date.short.pattern")
+                        )
         );
         schedule.getStyleClass().add("course-management-schedule");
 
