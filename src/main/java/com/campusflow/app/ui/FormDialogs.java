@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Window;
@@ -69,7 +70,8 @@ public final class FormDialogs {
                 I18n.text(editing ? "form.course.edit.title" : "form.course.add.title"),
                 editing
                         ? I18n.text("form.course.edit.header")
-                        : I18n.text("form.course.add.header")
+                        : I18n.text("form.course.add.header"),
+                settings
         );
 
         ButtonType saveButtonType = new ButtonType(
@@ -82,6 +84,7 @@ public final class FormDialogs {
         dialog.getDialogPane().getButtonTypes().addAll(
                 saveButtonType, cancelButtonType
         );
+        styleDialogButtons(dialog, saveButtonType, cancelButtonType);
 
         TextField codeField = textField(I18n.text("form.course.code.prompt"));
         TextField nameField = textField(I18n.text("form.course.name.prompt"));
@@ -93,6 +96,13 @@ public final class FormDialogs {
             instructorField.setText(existingCourse.getInstructor());
             locationField.setText(existingCourse.getLocation());
         }
+
+        DatePicker startDatePicker = new DatePicker(
+                editing ? existingCourse.getStartDate()
+                        : settings.getSemesterStart()
+        );
+        startDatePicker.getStyleClass().add("input-control");
+        startDatePicker.setMaxWidth(Double.MAX_VALUE);
 
         HBox dayButtonsBox = new HBox(6);
         dayButtonsBox.setAlignment(Pos.CENTER_LEFT);
@@ -155,7 +165,8 @@ public final class FormDialogs {
         addFormRow(form, 1, I18n.text("form.course.name"), nameField);
         addFormRow(form, 2, I18n.text("form.course.instructor"), instructorField);
         addFormRow(form, 3, I18n.text("form.course.location"), locationField);
-        addFormRow(form, 4, I18n.text("form.course.days"), dayButtonsBox);
+        addFormRow(form, 4, I18n.text("form.course.startDate"), startDatePicker);
+        addFormRow(form, 5, I18n.text("form.course.days"), dayButtonsBox);
 
         Label timeSeparator = new Label(I18n.text("form.course.to"));
         timeSeparator.getStyleClass().add("time-range-separator");
@@ -163,16 +174,16 @@ public final class FormDialogs {
                 10, startTimePicker, timeSeparator, endTimePicker
         );
         timeRow.setAlignment(Pos.CENTER_LEFT);
-        addFormRow(form, 5, I18n.text("form.course.time"), timeRow);
-        addFormRow(form, 6, I18n.text("form.course.color"), colorBox);
-        form.add(errorLabel, 0, 7, 2, 1);
+        addFormRow(form, 6, I18n.text("form.course.time"), timeRow);
+        addFormRow(form, 7, I18n.text("form.course.color"), colorBox);
+        form.add(errorLabel, 0, 8, 2, 1);
         dialog.getDialogPane().setContent(form);
 
         Node saveButton = dialog.getDialogPane().lookupButton(saveButtonType);
         saveButton.addEventFilter(ActionEvent.ACTION, event -> {
             String validationError = validateCourse(
                     codeField, nameField, dayButtons,
-                    startTimePicker, endTimePicker
+                    startDatePicker, startTimePicker, endTimePicker
             );
             if (validationError != null) {
                 errorLabel.setText(validationError);
@@ -197,6 +208,7 @@ public final class FormDialogs {
                     instructorField.getText().trim(),
                     locationField.getText().trim(),
                     meetingDays,
+                    startDatePicker.getValue(),
                     startTimePicker.getValue(),
                     endTimePicker.getValue(),
                     colorBox.getValue().storageValue()
@@ -215,7 +227,7 @@ public final class FormDialogs {
             Window owner, List<Course> courses, AppSettings settings) {
         Dialog<Assignment> dialog = new Dialog<>();
         configureDialog(dialog, owner, I18n.text("form.assignment.title"),
-                I18n.text("form.assignment.header"));
+                I18n.text("form.assignment.header"), settings);
 
         ButtonType saveButtonType = new ButtonType(
                 I18n.text("form.assignment.save"), ButtonBar.ButtonData.OK_DONE
@@ -226,6 +238,7 @@ public final class FormDialogs {
         dialog.getDialogPane().getButtonTypes().addAll(
                 saveButtonType, cancelButtonType
         );
+        styleDialogButtons(dialog, saveButtonType, cancelButtonType);
 
         TextField titleField = textField(I18n.text("form.assignment.name.prompt"));
         ComboBox<Course> courseBox = new ComboBox<>(
@@ -310,24 +323,63 @@ public final class FormDialogs {
     }
 
     private static void configureDialog(Dialog<?> dialog, Window owner,
-                                        String title, String header) {
+                                        String title, String header,
+                                        AppSettings settings) {
         dialog.setTitle(title);
         dialog.setHeaderText(header);
         if (owner != null) {
             dialog.initOwner(owner);
         }
         dialog.getDialogPane().getStyleClass().add("campus-dialog");
-        dialog.getDialogPane().setPrefWidth(540);
+        applyAppearance(dialog, settings);
+        dialog.getDialogPane().setMinWidth(620);
+        dialog.getDialogPane().setPrefWidth(640);
         String stylesheet = CampusFlowApplication.class
                 .getResource("styles.css").toExternalForm();
         dialog.getDialogPane().getStylesheets().add(stylesheet);
+    }
+
+    private static void applyAppearance(Dialog<?> dialog,
+                                        AppSettings settings) {
+        boolean systemDark = System.getProperty(
+                "apple.awt.application.appearance", ""
+        ).toLowerCase(Locale.ENGLISH).contains("dark");
+        boolean useDark = settings.getTheme() == AppSettings.Theme.DARK
+                || (settings.getTheme() == AppSettings.Theme.SYSTEM && systemDark);
+        dialog.getDialogPane().getStyleClass().add(
+                useDark ? "theme-dark" : "theme-light"
+        );
+        dialog.getDialogPane().getStyleClass().add(
+                "accent-" + settings.getAccentColor()
+                        .name().toLowerCase(Locale.ENGLISH)
+        );
+        dialog.getDialogPane().getStyleClass().add(
+                "density-" + settings.getDensity()
+                        .name().toLowerCase(Locale.ENGLISH)
+        );
+    }
+
+    private static void styleDialogButtons(Dialog<?> dialog,
+                                           ButtonType saveButtonType,
+                                           ButtonType cancelButtonType) {
+        dialog.getDialogPane().lookupButton(saveButtonType)
+                .getStyleClass().add("primary-button");
+        dialog.getDialogPane().lookupButton(cancelButtonType)
+                .getStyleClass().add("dialog-cancel-button");
     }
 
     private static GridPane createFormGrid() {
         GridPane form = new GridPane();
         form.setHgap(16);
         form.setVgap(12);
-        form.setPadding(new Insets(6, 0, 2, 0));
+        form.setPadding(new Insets(18, 28, 14, 28));
+        ColumnConstraints labelColumn = new ColumnConstraints();
+        labelColumn.setMinWidth(126);
+        labelColumn.setPrefWidth(126);
+        ColumnConstraints inputColumn = new ColumnConstraints();
+        inputColumn.setHgrow(javafx.scene.layout.Priority.ALWAYS);
+        inputColumn.setFillWidth(true);
+        form.getColumnConstraints().addAll(labelColumn, inputColumn);
         form.getStyleClass().add("form-grid");
         return form;
     }
@@ -364,6 +416,7 @@ public final class FormDialogs {
     private static String validateCourse(TextField codeField,
                                          TextField nameField,
                                          List<ToggleButton> dayButtons,
+                                         DatePicker startDatePicker,
                                          TimeWheelPicker startTimePicker,
                                          TimeWheelPicker endTimePicker) {
         if (codeField.getText().isBlank() || nameField.getText().isBlank()) {
@@ -371,6 +424,9 @@ public final class FormDialogs {
         }
         if (dayButtons.stream().noneMatch(ToggleButton::isSelected)) {
             return I18n.text("form.course.validation.days");
+        }
+        if (startDatePicker.getValue() == null) {
+            return I18n.text("form.course.validation.startDate");
         }
         if (!endTimePicker.getValue().isAfter(startTimePicker.getValue())) {
             return I18n.text("form.course.validation.time");

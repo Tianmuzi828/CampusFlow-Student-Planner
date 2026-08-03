@@ -231,9 +231,9 @@ public class ScheduleController {
     private void renderCourses(List<Course> courses) {
         int visibleOccurrences = 0;
         for (int dayIndex = 0; dayIndex < 7; dayIndex++) {
-            DayOfWeek day = weekStart.plusDays(dayIndex).getDayOfWeek();
+            LocalDate date = weekStart.plusDays(dayIndex);
             for (Course course : courses) {
-                if (!course.meetsOn(day)
+                if (!course.isScheduledOn(date)
                         || !ScheduleTimeScale.isVisible(
                                 course.getStartTime(), course.getEndTime(),
                                 settings.getCalendarStartTime(),

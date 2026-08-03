@@ -20,6 +20,11 @@ class DashboardServiceTest {
         LocalDate monday = LocalDate.of(2026, 7, 27);
         Course java = course(1, "MON,WED", LocalTime.of(10, 0));
         Course tuesdayCourse = course(2, "TUE,THU", LocalTime.of(9, 0));
+        Course futureCourse = new Course(
+                3, "CMPSC 360", "Future course", "Professor",
+                "IST 110", "MON", monday.plusWeeks(1),
+                LocalTime.of(8, 0), LocalTime.of(9, 0), "green"
+        );
 
         List<Assignment> assignments = List.of(
                 assignment(1, monday, Priority.HIGH, AssignmentStatus.NOT_STARTED),
@@ -28,7 +33,7 @@ class DashboardServiceTest {
         );
 
         DashboardSummary summary = service.summarize(
-                List.of(java, tuesdayCourse), assignments, monday
+                List.of(java, tuesdayCourse, futureCourse), assignments, monday
         );
 
         assertEquals(1, summary.getTodayCourses().size());

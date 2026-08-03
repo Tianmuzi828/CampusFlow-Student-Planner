@@ -407,7 +407,7 @@
 
 .campus-dialog > .header-panel {
     -fx-background-color: #FFFFFF;
-    -fx-padding: 22 24 16 24;
+    -fx-padding: 22 28 18 28;
 }
 
 .campus-dialog > .header-panel > .label {
@@ -422,6 +422,11 @@
 
 .form-grid {
     -fx-background-color: #F8F9FC;
+}
+
+.campus-dialog > .button-bar > .container {
+    -fx-background-color: #F8F9FC;
+    -fx-padding: 10 28 18 28;
 }
 
 .form-label {
@@ -533,6 +538,25 @@
 .campus-dialog .button-bar .button:default {
     -fx-background-color: #5D69E8;
     -fx-text-fill: #FFFFFF;
+}
+
+.campus-dialog .button-bar .dialog-cancel-button {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #DDE1EB;
+    -fx-border-radius: 8;
+    -fx-text-fill: #596276;
+}
+
+.campus-dialog.accent-purple .button-bar .primary-button {
+    -fx-background-color: #8B5CF6;
+}
+
+.campus-dialog.accent-green .button-bar .primary-button {
+    -fx-background-color: #2F9E76;
+}
+
+.campus-dialog.accent-orange .button-bar .primary-button {
+    -fx-background-color: #E18436;
 }
 
 .schedule-page {
@@ -1334,6 +1358,66 @@
 .theme-dark .settings-status-error { -fx-text-fill: #F08088; }
 .theme-dark .settings-check { -fx-text-fill: #C4CBDA; }
 
+/* Dialogs inherit the same appearance classes as the main application. */
+.campus-dialog.theme-dark,
+.campus-dialog.theme-dark .form-grid,
+.campus-dialog.theme-dark > .button-bar > .container {
+    -fx-background-color: #141A27;
+}
+
+.campus-dialog.theme-dark > .header-panel {
+    -fx-background-color: #1D2534;
+    -fx-border-color: transparent transparent #303A4C transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.campus-dialog.theme-dark > .header-panel > .label {
+    -fx-text-fill: #E8EBF2;
+}
+
+.campus-dialog.theme-dark .form-label,
+.campus-dialog.theme-dark .time-wheel-separator,
+.campus-dialog.theme-dark .time-range-separator {
+    -fx-text-fill: #B8C1D1;
+}
+
+.campus-dialog.theme-dark .day-toggle {
+    -fx-background-color: #242D3E;
+    -fx-border-color: #3B465B;
+    -fx-text-fill: #C4CBDA;
+}
+
+.campus-dialog.theme-dark .day-toggle:selected {
+    -fx-background-color: #5D69E8;
+    -fx-border-color: #5D69E8;
+    -fx-text-fill: #FFFFFF;
+}
+
+.campus-dialog.theme-dark .time-wheel-spinner {
+    -fx-background-color: #242D3E;
+    -fx-border-color: #3B465B;
+}
+
+.campus-dialog.theme-dark .time-wheel-spinner > .text-field {
+    -fx-text-fill: #E8EBF2;
+}
+
+.campus-dialog.theme-dark .time-wheel-spinner .increment-arrow-button,
+.campus-dialog.theme-dark .time-wheel-spinner .decrement-arrow-button {
+    -fx-background-color: #303A4C;
+}
+
+.campus-dialog.theme-dark .time-wheel-spinner .increment-arrow,
+.campus-dialog.theme-dark .time-wheel-spinner .decrement-arrow {
+    -fx-background-color: #C4CBDA;
+}
+
+.campus-dialog.theme-dark .button-bar .dialog-cancel-button {
+    -fx-background-color: #252E40;
+    -fx-border-color: #3A465B;
+    -fx-text-fill: #C4CBDA;
+}
+
 /* Dark theme: controls with their own internal cells need explicit text colors. */
 .theme-dark .combo-box > .list-cell {
     -fx-background-color: transparent;
@@ -1525,4 +1609,35 @@
 .theme-dark .focus-progress > .track,
 .theme-dark .stat-progress > .track {
     -fx-background-color: #303A4C;
+}
+
+/* Keep dialog selections and focus rings synchronized with the chosen accent. */
+.campus-dialog.accent-purple .day-toggle:selected {
+    -fx-background-color: #8B5CF6;
+    -fx-border-color: #8B5CF6;
+}
+
+.campus-dialog.accent-green .day-toggle:selected {
+    -fx-background-color: #2F9E76;
+    -fx-border-color: #2F9E76;
+}
+
+.campus-dialog.accent-orange .day-toggle:selected {
+    -fx-background-color: #E18436;
+    -fx-border-color: #E18436;
+}
+
+.campus-dialog.accent-purple .input-control:focused,
+.campus-dialog.accent-purple .time-wheel-spinner:focused {
+    -fx-border-color: #8B5CF6;
+}
+
+.campus-dialog.accent-green .input-control:focused,
+.campus-dialog.accent-green .time-wheel-spinner:focused {
+    -fx-border-color: #2F9E76;
+}
+
+.campus-dialog.accent-orange .input-control:focused,
+.campus-dialog.accent-orange .time-wheel-spinner:focused {
+    -fx-border-color: #E18436;
 }

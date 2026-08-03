@@ -13,7 +13,7 @@ public class DashboardService {
                                       List<Assignment> assignments,
                                       LocalDate today) {
         List<Course> todayCourses = courses.stream()
-                .filter(course -> course.meetsOn(today.getDayOfWeek()))
+                .filter(course -> course.isScheduledOn(today))
                 .sorted(Comparator.comparing(Course::getStartTime))
                 .toList();
 
